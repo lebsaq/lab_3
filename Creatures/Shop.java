@@ -1,9 +1,10 @@
 package Creatures;
 
 import Trash.Item;
-import sun.awt.image.ImageWatched;
+import Types.ItemType;
 
 import java.util.LinkedList;
+import java.util.Objects;
 
 public class Shop extends Creature {
     private LinkedList<Item> inventory = new LinkedList<>();
@@ -11,6 +12,10 @@ public class Shop extends Creature {
 
     public int getBalance() {
         return this.balance;
+    }
+
+    public void addSweets(int amount){
+        inventory.add(new Item("sweet", ItemType.SWEET,amount));
     }
     public void setBalance(int newBalance){
         this.balance = newBalance;
@@ -23,9 +28,9 @@ public class Shop extends Creature {
         LinkedList<Item> tempList = new LinkedList<>();
         int temp = amountOfMoney;
         while(temp > 0){
-            if(this.inventory.getLast().amount<=temp){
+            if(this.inventory.getLast().getAmount()<=temp){
                 tempList.add(this.inventory.getLast());
-                temp = temp - this.inventory.getLast().amount;
+                temp = temp - this.inventory.getLast().getAmount();
                 this.inventory.remove(this.inventory.getLast());
             }
             else{
@@ -35,5 +40,23 @@ public class Shop extends Creature {
             }
         }
         return tempList;
+    }
+
+    @Override
+    public String toString() {
+        return "Shop{" + "inventory=" + inventory.size() + ", balance=" + balance + '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (getClass() != obj.getClass()) return false;
+        Shop shop = (Shop) obj;
+        return balance == shop.balance && Objects.equals(inventory, shop.inventory);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(inventory, balance);
     }
 }

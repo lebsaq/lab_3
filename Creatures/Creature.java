@@ -5,6 +5,7 @@ import Creatures.*;
 import Trash.*;
 import Types.*;
 
+import java.sql.SQLOutput;
 import java.util.InputMismatchException;
 import java.util.LinkedList;
 
@@ -30,19 +31,23 @@ public abstract class Creature implements Socialize, WatchPerfomance {
     }
 
     @Override
-    public void getMessage(String phrase){
+    public void addMessage(String phrase){
         this.knowledge.add(phrase);
+        System.out.println("thinking");
     }
+
+    @Override
+    public void sayExactMessage(Creature creature, int index) {
+
+    }
+
     public void sayExactMessage(Creature creature, String phrase){
-        creature.knowledge.add(phrase);
+            creature.knowledge.add(phrase);
+        System.out.println(phrase);
     }
-    public void sayExactMessage(Creature creature, int index) throws InputMismatchException {
-        if(index > this.knowledge.size()){
-            throw new InputMismatchException();
-        }
-        else{
-            creature.knowledge.add(this.knowledge.get(index));
-        }
+    public void sayExactMessage(String phrase){
+        this.knowledge.add(phrase);
+        System.out.println(phrase);
     }
 
     public String getExactMessage(int index) throws InputMismatchException {

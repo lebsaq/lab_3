@@ -4,6 +4,8 @@ import Creatures.*;
 import Trash.*;
 import Types.*;
 
+import java.util.Objects;
+
 public class Perfomance{
     protected String name;
     protected Place place;
@@ -29,5 +31,24 @@ public class Perfomance{
     }
     public void setName(String name){
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Perfomance{" + "face=" + name + ", place=" + place + '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (getClass() != obj.getClass()) return false;
+        Perfomance temp = (Perfomance) obj;
+        return Objects.equals(name, temp.name) &&
+                Objects.equals(place, temp.place);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, place);
     }
 }

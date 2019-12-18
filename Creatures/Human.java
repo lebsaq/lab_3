@@ -12,6 +12,8 @@ import Types.PlaceType;
 import java.util.InputMismatchException;
 import java.util.LinkedList;
 import java.util.Objects;
+import java.util.function.BinaryOperator;
+import java.util.stream.Collector;
 
 public class Human extends Creature implements BuySweets, PresentKarlson {
     protected LinkedList<Item> inventory = new LinkedList<>();
@@ -39,8 +41,20 @@ public class Human extends Creature implements BuySweets, PresentKarlson {
         }
     }
 
+    public int getBalance() {
+        int res = 0;
+        for (Item item: this.inventory) {
+            if(item.getType() != ItemType.MONEY) {
+                continue;
+            }
+            res += item.getAmount();
+        }
+        return res;
+    }
+
     @Override
-    public void buySweets (Shop shop, int amountOfMoney) throws InputMismatchException {
+    public void buySweets (Shop shop) throws InputMismatchException {
+        int amountOfMoney = getBalance();
         if(!this.place.getName().equals(PlaceType.NEXTTOSHOP.toString())){
             throw new InputMismatchException();
         }
@@ -52,9 +66,7 @@ public class Human extends Creature implements BuySweets, PresentKarlson {
                         this.inventory.get(i).setAmount(-amountOfMoney);
                         //shop.addBalance(amountOfMoney);
                         LinkedList<Item> tempList = shop.sellSweets(amountOfMoney);
-                        for (int j = 0; j < tempList.size(); j++) {
-                            this.inventory.add(tempList.get(j));
-                        }
+                        this.inventory.addAll(tempList);
                     } else {
                         throw new InputMismatchException();
                     }
@@ -81,11 +93,11 @@ public class Human extends Creature implements BuySweets, PresentKarlson {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (getClass() != o.getClass()) return false;
-        Human human = (Human) o;
-        return Objects.equals(inventory, human.inventory) && this.name.equals(human.name);
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (getClass() != obj.getClass()) return false;
+        Human human = (Human) obj;
+        return this.inventory.equals(human.inventory) && this.name.equals(human.name);
     }
 
     @Override
