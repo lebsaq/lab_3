@@ -5,7 +5,7 @@ public enum PlaceType {
     YOUNGBOYSPLACE("youngboysplace"),
     ROOF("roof"),
     NONE("none"),
-    NEXTTOSHOP("nexttohop"),
+    NEXTTOSHOP("nexttshop"),
     UNKNOWN("unknown"),
     ;
 

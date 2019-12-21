@@ -9,7 +9,9 @@ public class Girl extends Human {
     public Girl(String name){
         super(name);
         this.creatureType = CreatureType.GIRL;
+        this.knowledge.add("У МАЛЫША ТУСА");
     }
+
 
     @Override
     public String toString() {

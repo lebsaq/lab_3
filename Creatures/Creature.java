@@ -1,15 +1,13 @@
 package Creatures;
 
 import Actions.*;
-import Creatures.*;
 import Trash.*;
 import Types.*;
 
-import java.sql.SQLOutput;
 import java.util.InputMismatchException;
 import java.util.LinkedList;
 
-public abstract class Creature implements Socialize, WatchPerfomance {
+public abstract class Creature implements Socialize, WatchPerformance {
     protected String name;
     protected LinkedList<String> knowledge = new LinkedList<>();
     protected CreatureType creatureType;
@@ -33,17 +31,22 @@ public abstract class Creature implements Socialize, WatchPerfomance {
     @Override
     public void addMessage(String phrase){
         this.knowledge.add(phrase);
-        System.out.println("thinking");
+        System.out.println(this.toString() + " думает: " + phrase);
     }
 
     @Override
     public void sayExactMessage(Creature creature, int index) {
-
+        this.knowledge.add(this.knowledge.get(index));
+        System.out.println(this.toString() +" говорит: " + this.knowledge.get(index));
     }
 
     public void sayExactMessage(Creature creature, String phrase){
-            creature.knowledge.add(phrase);
-        System.out.println(phrase);
+        creature.knowledge.add(phrase);
+        System.out.println(this.toString() +" говорит: " + phrase);
+    }
+    public void sayExactMessage(Creature creature, Performance performance){
+        creature.knowledge.add(performance.toString());
+        System.out.println(this.toString() +" говорит: " + performance.toString());
     }
     public void sayExactMessage(String phrase){
         this.knowledge.add(phrase);
@@ -63,13 +66,14 @@ public abstract class Creature implements Socialize, WatchPerfomance {
     }
     public void setPlace(Place place){
         this.place = place;
+        System.out.println(this.toString() + ": выбегает на " + place);
     }
-    public void watchPerfomance(Perfomance perfomance) throws InputMismatchException{
-        if(this.place.getType().equals(perfomance.getPlace().getType())){
+    public void watchPerformance(Performance performance) throws InputMismatchException{
+        if(this.place.getType().equals(performance.getPlace().getType())){
             throw new InputMismatchException();
         }
         else{
-            this.knowledge.add("I have watched perfomane!");
+            this.knowledge.add("I have watched performance!");
         }
     }
 }

@@ -26,11 +26,11 @@ public class Shop extends Creature {
     public LinkedList<Item> sellSweets(int amountOfMoney){
         this.addBalance(amountOfMoney);
         LinkedList<Item> tempList = new LinkedList<>();
-        int temp = amountOfMoney;
-        while(temp > 0){
-            if(this.inventory.getLast().getAmount()<=temp){
+       // int temp = amountOfMoney;
+        while(amountOfMoney > 0){
+            if(this.inventory.getFirst().getAmount()<=amountOfMoney){
                 tempList.add(this.inventory.getLast());
-                temp = temp - this.inventory.getLast().getAmount();
+                amountOfMoney = amountOfMoney - this.inventory.getLast().getAmount();
                 this.inventory.remove(this.inventory.getLast());
             }
             else{
@@ -41,6 +41,7 @@ public class Shop extends Creature {
         }
         return tempList;
     }
+
 
     @Override
     public String toString() {

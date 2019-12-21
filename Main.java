@@ -1,4 +1,3 @@
-import Actions.*;
 import Creatures.*;
 import Trash.*;
 import Types.*;
@@ -15,24 +14,32 @@ public class Main {
         начнется большое представление "Вечер чудес".
         И все, у кого было хотя бы пять эре, побежали в лавку и купили там "входные конфеты".
         */
-        They they = new They("Они");
+        Place street = new Place("Street", PlaceType.STREET);
+        Place nexttoshop = new Place("nexttoshop", PlaceType.NEXTTOSHOP);
+        They they = new They(10, "Они");
+        they.setPlace(street);
         Shop magaz = new Shop();
         Boy krister = new Boy("Федя");
         Girl gunilla = new Girl ("Катька");
         magaz.addSweets(99999);
-        they.addMessage("КОНФЕТЫ ПОЛУЧИТ КАРЛСОН");
-        Place street = new Place("Street", PlaceType.STREET);
+        they.sayExactMessage("КОНФЕТЫ ПОЛУЧИТ КАРЛСОН");
         gunilla.setPlace(street);
         krister.setPlace(street);
 
-        gunilla.sayExactMessage(they,"НАВЕРХУ У МАЛЫША ТУСА");
-        Perfomance miracleEvening = new Perfomance("Вечер чудес",new Place("Комната Малыша",PlaceType.YOUNGBOYSPLACE));
+        Performance miracleEvening = new Performance("Вечер чудес", new Place("Комната Малыша",PlaceType.YOUNGBOYSPLACE));
+        //TODO: дети должны быть на улице
+        //TODO: нужно передавать не строчку, а само событие
+        if(they.getPlace().equals(gunilla.getPlace())) {
+            gunilla.sayExactMessage(they,miracleEvening);
+        }
+        else{
+            System.out.println("На улице никого");
+        }
         List<Human> humanList = new ArrayList<>();
         for(Human human : they.getHumans()) {
-            Place nextToShop = new Place("Shop", PlaceType.NEXTTOSHOP);
             if (human.getBalance() >= 5) {
-                human.setPlace(nextToShop);
-                System.out.println();
+                human.setPlace(nexttoshop);
+              //  System.out.println(human.getBalance());
                 human.buySweets(magaz);
             }
         }

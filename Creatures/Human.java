@@ -9,13 +9,12 @@ import Types.CreatureType;
 import Types.ItemType;
 import Types.PlaceType;
 
-import java.util.InputMismatchException;
-import java.util.LinkedList;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.BinaryOperator;
 import java.util.stream.Collector;
 
 public class Human extends Creature implements BuySweets, PresentKarlson {
+    private List<Human> humans = new ArrayList<>();
     protected LinkedList<Item> inventory = new LinkedList<>();
     public Human(String name){
         super(name, CreatureType.HUMAN);
@@ -27,18 +26,18 @@ public class Human extends Creature implements BuySweets, PresentKarlson {
         this("unknown");
     }
 
-
-    public void addBalance(int amountOfMoney){
-        for(int i=0;i<this.inventory.size();i++){
-            if (this.inventory.get(i).getType()== ItemType.MONEY){
-                this.inventory.get(i).addAmount(amountOfMoney);
-                return;
-            }
-        }
+    public void addBalance(int amountOfMoney) {
         {
             Item tempItem = new Item("ere", ItemType.MONEY);
             this.inventory.add(tempItem);
         }
+        for(int i=0; i<this.inventory.size(); i++){
+            if (this.inventory.get(i).getType() == ItemType.MONEY){
+                this.inventory.get(i).addAmount(amountOfMoney);
+                return;
+            }
+        }
+
     }
 
     public int getBalance() {
@@ -49,23 +48,24 @@ public class Human extends Creature implements BuySweets, PresentKarlson {
             }
             res += item.getAmount();
         }
+        System.out.println(this.name + " получил "+ res + " монет");
         return res;
     }
 
     @Override
     public void buySweets (Shop shop) throws InputMismatchException {
         int amountOfMoney = getBalance();
-        if(!this.place.getName().equals(PlaceType.NEXTTOSHOP.toString())){
+        if(!this.place.getType().equals(PlaceType.NEXTTOSHOP)){
             throw new InputMismatchException();
         }
         else {
-            Item temp = new Item("temp", ItemType.MONEY, amountOfMoney);
             for (int i = 0; i < this.inventory.size(); i++) {
                 if (this.inventory.get(i).getType() == ItemType.MONEY) {
                     if (this.inventory.get(i).getAmount() >= amountOfMoney) {
                         this.inventory.get(i).setAmount(-amountOfMoney);
-                        //shop.addBalance(amountOfMoney);
+                        shop.addBalance(amountOfMoney);
                         LinkedList<Item> tempList = shop.sellSweets(amountOfMoney);
+                        System.out.println(this.toString() +" купил "+ tempList.size() +" конфет");
                         this.inventory.addAll(tempList);
                     } else {
                         throw new InputMismatchException();
@@ -103,5 +103,10 @@ public class Human extends Creature implements BuySweets, PresentKarlson {
     @Override
     public int hashCode() {
         return this.name.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

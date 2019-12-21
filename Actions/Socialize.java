@@ -6,6 +6,7 @@ import Types.*;
 public interface Socialize {
     public void sayExactMessage(Creature creature, String phrase);
     public void sayExactMessage(String phrase);
+  //  public void talkAboutSmth(Creature creature);
     public void sayExactMessage(Creature creature, int index);
     public void addMessage(String phrase);
 }

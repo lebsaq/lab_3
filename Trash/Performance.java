@@ -1,22 +1,21 @@
-package Actions;
-import Actions.*;
-import Creatures.*;
-import Trash.*;
-import Types.*;
+package Trash;
 
 import java.util.Objects;
 
-public class Perfomance{
+public class Performance{
     protected String name;
     protected Place place;
 
-    public Perfomance(){
+    public Performance(){
         this("unknown");
     }
-    public Perfomance(String name){
+    public String getInfo(){
+        return this.name + " в " + this.place;
+    }
+    public Performance(String name){
         this.name = name;
     }
-    public Perfomance(String name, Place place){
+    public Performance(String name, Place place){
         this.name = name;
         this.place = place;
     }
@@ -35,14 +34,14 @@ public class Perfomance{
 
     @Override
     public String toString() {
-        return "Perfomance{" + "face=" + name + ", place=" + place + '}';
+        return "Performance: " + "name = " + name + ", place = " + place;
     }
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (getClass() != obj.getClass()) return false;
-        Perfomance temp = (Perfomance) obj;
+        Performance temp = (Performance) obj;
         return Objects.equals(name, temp.name) &&
                 Objects.equals(place, temp.place);
     }

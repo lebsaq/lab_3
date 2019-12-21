@@ -15,7 +15,7 @@ public enum CreatureType {
         this.strType = strType;
     }
 
-    private String getStrType(){
+    public String getStrType(){
         return this.strType;
     }
 
