@@ -6,6 +6,8 @@ import Trash.*;
 import Types.*;
 import Types.ItemType;
 
+import java.util.Objects;
+
 public class Item {
     protected String name;
     protected ItemType type;
@@ -47,15 +49,14 @@ public class Item {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this.getClass() != obj.getClass()) {
-            return false;
-        }
-        Item temp = (Item) obj;
-        return (this.getName().equals(temp.getName()))&&(this.amount == temp.amount);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return amount == item.amount &&
+                Objects.equals(name, item.name) &&
+                type == item.type;
     }
-
-
 
     @Override
     public String toString() {
@@ -64,6 +65,6 @@ public class Item {
 
     @Override
     public int hashCode() {
-        return this.name.hashCode();
+        return Objects.hash(name, amount, type);
     }
 }

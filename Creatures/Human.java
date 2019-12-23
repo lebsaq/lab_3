@@ -98,7 +98,7 @@ public class Human extends Creature implements BuySweets, PresentKarlson {
 
     @Override
     public int hashCode() {
-        return this.name.hashCode() + this.inventory.hashCode();
+        return Objects.hash(name, inventory);
     }
 
     @Override
