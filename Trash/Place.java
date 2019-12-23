@@ -34,13 +34,24 @@ public class Place {
         return this.getName();
     }
 
+//    @Override
+//    public boolean equals(Object obj) {
+//        // TODO: fix null and ==
+//        if(obj.getClass() != this.getClass()){
+//            return  false;
+//        }
+//        Place temp = (Place)obj;
+//        return (this.getName().equals(temp.getName())) && (this.getType().equals(temp.getType()));
+//    }
+
+
     @Override
-    public boolean equals(Object obj) {
-        if(obj.getClass() != this.getClass()){
-            return  false;
-        }
-        Place temp = (Place)obj;
-        return (this.getName().equals(temp.getName())) && (this.getType().equals(temp.getType()));
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Place place = (Place) o;
+        return Objects.equals(name, place.name) &&
+                type == place.type;
     }
 
     @Override

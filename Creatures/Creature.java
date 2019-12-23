@@ -6,8 +6,10 @@ import Types.*;
 
 import java.util.InputMismatchException;
 import java.util.LinkedList;
+import java.util.Objects;
 
 public abstract class Creature implements Socialize, WatchPerformance {
+    public final int moneyIndex = 0;
     protected String name;
     protected LinkedList<String> knowledge = new LinkedList<>();
     protected CreatureType creatureType;
@@ -75,5 +77,33 @@ public abstract class Creature implements Socialize, WatchPerformance {
         else{
             this.knowledge.add("I have watched performance!");
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Creature creature = (Creature) o;
+        return moneyIndex == creature.moneyIndex &&
+                Objects.equals(name, creature.name) &&
+                Objects.equals(knowledge, creature.knowledge) &&
+                creatureType == creature.creatureType &&
+                Objects.equals(place, creature.place);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(moneyIndex, name, knowledge, creatureType, place);
+    }
+
+    @Override
+    public String toString() {
+        return "Creature{" +
+                "moneyIndex=" + moneyIndex +
+                ", name='" + name + '\'' +
+                ", knowledge=" + knowledge +
+                ", creatureType=" + creatureType +
+                ", place=" + place +
+                '}';
     }
 }

@@ -7,6 +7,7 @@ import Types.ItemType;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 public class They extends Creature {
     private List<Human> humans = new ArrayList<>();
@@ -39,11 +40,12 @@ public class They extends Creature {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (getClass() != obj.getClass()) return false;
-        They they = (They) obj;
-        return this.name.equals(they.name);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        They they = (They) o;
+        return Objects.equals(humans, they.humans) &&
+                Objects.equals(inventory, they.inventory);
     }
 
     @Override

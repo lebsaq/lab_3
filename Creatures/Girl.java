@@ -24,10 +24,7 @@ public class Girl extends Human {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if(getClass() != obj.getClass()) return false;
-        Human human = (Human) obj;
-        return this.name.equals(human.name) && this.inventory.equals(human.inventory) && this.creatureType.equals(human.creatureType);
+    public boolean equals(Object o) {
+        return super.equals(o);
     }
 }
