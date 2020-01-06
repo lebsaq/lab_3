@@ -4,7 +4,7 @@ public enum CreatureType {
     HUMAN("human"),
     BOY("boy"),
     GIRL("girl"),
-    NONE("none"),
+    UNKNOWN("unknown"),
     OTHER("other"),
     KARLSON("karlson"),
     ;

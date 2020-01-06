@@ -33,14 +33,13 @@ public class Shop {
         if (amountOfMoney > 0) {
             this.addBalance(amountOfMoney);
             tempList.add(new Item("sweet", ItemType.SWEET, amountOfMoney));
-            amountOfMoney=0;
             }
         return tempList;
     }
 
     @Override
     public String toString() {
-        return "Shop{" + "inventory=" + inventory.size() + ", balance=" + balance + '}';
+        return "Shop {" + "inventory = " + inventory.size() + ", balance = " + balance + " }";
     }
 
     @Override
@@ -55,9 +54,6 @@ public class Shop {
     public int hashCode() {
         return Objects.hash(inventory, balance);
     }
-
-
-
 }
 
 //

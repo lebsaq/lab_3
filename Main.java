@@ -1,4 +1,5 @@
 import Creatures.*;
+import Exceptions.NotaCreatureException;
 import Trash.*;
 import Types.*;
 
@@ -6,7 +7,7 @@ import java.util.*;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NotaCreatureException {
 
         /*
         Итак, они решили, что все конфеты получит Карлсон, который живет на крыше.
@@ -22,24 +23,22 @@ public class Main {
         Boy krister = new Boy("Федя");
         Girl gunilla = new Girl ("Катька");
         magaz.addSweets(99999);
+
         they.sayExactMessage("КОНФЕТЫ ПОЛУЧИТ КАРЛСОН");
         gunilla.setPlace(street);
         krister.setPlace(street);
 
-        Performance miracleEvening = new Performance("Вечер чудес", new Place("Комната Малыша",PlaceType.YOUNGBOYSPLACE));
-        //TODO: дети должны быть на улице
-        //TODO: нужно передавать не строчку, а само событие
+        Performance miracleEvening = new Performance("Вечер чудес", new Place("Комната Малыша",PlaceType.YOUNGBOYSPLACE), new Boy("Малыш"));
         if(they.getPlace().equals(gunilla.getPlace())) {
             gunilla.sayExactMessage(they,miracleEvening);
         }
         else{
             System.out.println("На улице никого");
         }
-        List<Human> humanList = new ArrayList<>();
         for(Human human : they.getHumans()) {
             if (human.getBalance() >= 5) {
+                System.out.println();
                 human.setPlace(nexttoshop);
-              //  System.out.println(human.getBalance());
                 human.buySweets(magaz);
             }
         }

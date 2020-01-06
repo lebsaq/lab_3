@@ -1,10 +1,13 @@
 package Trash;
 
+import Creatures.Creature;
+
 import java.util.Objects;
 
 public class Performance{
     protected String name;
     protected Place place;
+    protected Creature creature;
 
     public Performance(){
         this("unknown");
@@ -15,7 +18,8 @@ public class Performance{
     public Performance(String name){
         this.name = name;
     }
-    public Performance(String name, Place place){
+    public Performance(String name, Place place, Creature creature){
+        this.creature=creature;
         this.name = name;
         this.place = place;
     }
@@ -34,7 +38,7 @@ public class Performance{
 
     @Override
     public String toString() {
-        return "Performance: " + "name = " + name + ", place = " + place;
+        return "Performance: " + "face = " + creature + ", place = " + place + ", name = " + name;
     }
 
     @Override

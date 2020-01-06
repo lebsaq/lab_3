@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class They extends Creature {
-    private List<Human> humans = new ArrayList<>();
+
     private LinkedList<Item> inventory = new LinkedList<>();
 
     public They(){
@@ -24,15 +24,13 @@ public class They extends Creature {
     public They (int n,String name) {
         super(name, CreatureType.OTHER);
         for (int i = 0; i < n; i++) {
-            Human human = new Human("John Doe", CreatureType.HUMAN);
+            // TODO: https://ru.wikipedia.org/wiki/Принцип_подстановки_Барбары_Лисков
+            Human human = new Human("John Doe", CreatureType.GIRL);
             human.addBalance(i);
-           // System.out.println(human.getBalance());
             humans.add(human);
         }
     }
-    public List<Human> getHumans(){
-        return humans;
-    }
+
 
     @Override
     public String toString() {
@@ -50,8 +48,6 @@ public class They extends Creature {
 
     @Override
     public int hashCode() {
-        return this.name.hashCode();
+        return Objects.hash(super.hashCode(), humans, inventory);
     }
-
-
 }
