@@ -9,24 +9,37 @@ public abstract class Creature implements Socialize, WatchPerformance {
     public final int moneyIndex = 0;
     protected String name;
     protected List<Human> humans = new ArrayList<>();
-    protected List<String> knowledge = new ArrayList<>();
+
     protected CreatureType creatureType;
     protected Place place;
+    protected Place livingPlace;
 
     protected Creature(String name, CreatureType crType){
         this.name = name;
         this.creatureType = crType;
+        this.place=new Place("default", PlaceType.UNKNOWN);
+
     }
 
     protected Creature(String name){
         this(name, CreatureType.UNKNOWN);
+        this.place=new Place("default", PlaceType.UNKNOWN);
+    }
+
+    protected Creature(String name, Place livingPlace){
+        this.name=name;
+        this.livingPlace=livingPlace;
+        this.place=new Place("default", PlaceType.UNKNOWN);
     }
 
     protected Creature(){
         this("unknown");
+        this.place=new Place("default", PlaceType.UNKNOWN);
+
     }
 
     public Place getPlace(){
+        System.out.println(this + " находится на " + this.place);
         return this.place;
     }
 
@@ -34,66 +47,78 @@ public abstract class Creature implements Socialize, WatchPerformance {
         return humans;
     }
 
-    @Override
-    public void addMessage(String phrase) {
-        this.knowledge.add(phrase);
-        System.out.println(this.toString() + " думает: " + phrase);
-    }
+        protected LinkedList<String> knowledge = new LinkedList<>();
 
-    @Override
-    public void sayExactMessage(Creature creature, int index) throws NotaCreatureException {
-        if (creature == null) {
-            throw new NotaCreatureException("Существо должно существовать");
+        @Override
+        public void addMessage(String phrase) {
+            this.knowledge.add(phrase);
+            System.out.println(this.toString() + " думает " + phrase);
         }
-        this.knowledge.add(this.knowledge.get(index));
-        System.out.println(this.toString() + " говорит: " + this.knowledge.get(index));
-    }
 
-    public void sayExactMessage(Creature creature, String phrase) throws NotaCreatureException {
-        if (creature == null) {
-            throw new NotaCreatureException("Существо должно существовать");
+        @Override
+        public void sayExactMessage(Creature creature, int index) throws NotaCreatureException {
+            if (creature == null) {
+                throw new NotaCreatureException("Существо должно существовать");
+            }
+            this.knowledge.add(this.knowledge.get(index));
+            System.out.println(this.toString() + " говорит " + this.knowledge.get(index));
         }
-        creature.knowledge.add(phrase);
-        System.out.println(this.toString() + " говорит: " + phrase);
-    }
 
-    public void sayExactMessage(Creature creature, Performance performance) throws NotaCreatureException {
-        if (creature == null) {
-            throw new NotaCreatureException("Существо должно существовать");
+        public void sayExactMessage(Creature creature, String phrase) throws NotaCreatureException {
+            if (creature == null) {
+                throw new NotaCreatureException("Существо должно существовать");
+            }
+            this.knowledge.add(phrase);
+            System.out.println(this.toString() + " говорит " + phrase);
         }
-        creature.knowledge.add(performance.toString());
-        System.out.println(this.toString() + " говорит: " + performance.toString());
-    }
 
-    public void sayExactMessage(String phrase) {
-        this.knowledge.add(phrase);
-        System.out.println(this.toString() + " говорит: " + phrase);
-    }
-
-    public String getExactMessage(int index) throws InputMismatchException {
-        if (index > this.knowledge.size()) {
-            throw new InputMismatchException();
-        } else {
-            return this.knowledge.get(index);
+        public void sayExactMessage(Creature creature, Performance performance) throws NotaCreatureException {
+            if (creature == null) {
+                throw new NotaCreatureException("Существо должно существовать");
+            }
+            this.knowledge.add(performance.toString());
+            System.out.println(this.toString() + " говорит " + performance.toString());
         }
-    }
 
-    public void addKnowledge(String phrase) {
-        this.knowledge.add(phrase);
-    }
+        public void sayExactMessage(String phrase) {
+            this.knowledge.add(phrase);
+            System.out.println(this.toString() + " говорит " + phrase);
+        }
 
-    public void setPlace(Place place) {
+        public void sayExactMessage(int index) {
+            //this.knowledge.add();
+            System.out.println(this.toString() + " говорит " + this.knowledge.get(index));
+        }
+
+        public String getExactMessage(int index) throws InputMismatchException {
+            if (index > this.knowledge.size()) {
+                throw new InputMismatchException();
+            } else {
+                return this.knowledge.get(index);
+            }
+        }
+
+        public void addKnowledge(String phrase) {
+            this.knowledge.add(phrase);
+            System.out.println(this.knowledge.indexOf(phrase));
+        }
+
+
+
+    public void setPlace(Place place) throws InputMismatchException{
         this.place = place;
-        System.out.println(this.toString() + ": выбегает на " + place);
+        System.out.println(this.toString() + " выбегает на " + place);
     }
 
     public void watchPerformance(Performance performance) throws InputMismatchException {
-        if (this.place.getType().equals(performance.getPlace().getType())) {
+        if (!this.place.getType().equals(performance.getPlace().getType()) && this.place!=null) {
             throw new InputMismatchException();
         } else {
-            this.knowledge.add("I have watched performance!");
+            this.sayExactMessage("\"I have watched performance " + performance.getName() + "\"!");
         }
     }
+
+
 
     @Override
     public boolean equals(Object o) {
@@ -108,7 +133,7 @@ public abstract class Creature implements Socialize, WatchPerformance {
 
     @Override
     public int hashCode() {
-        return Objects.hash(moneyIndex, name, knowledge, creatureType, place);
+        return Objects.hash(name, knowledge, creatureType, place);
     }
 
 }

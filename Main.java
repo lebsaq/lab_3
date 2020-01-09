@@ -9,32 +9,39 @@ public class Main {
 
     public static void main(String[] args) throws NotaCreatureException {
 
-        /*
-        Итак, они решили, что все конфеты получит Карлсон, который живет на крыше.
-        Кристер и Гунилла выбежали на улицу и рассказали всем детям, что наверху у Малыша сейчас
-        начнется большое представление "Вечер чудес".
-        И все, у кого было хотя бы пять эре, побежали в лавку и купили там "входные конфеты".
+        /**
+       * Итак, они решили, что все конфеты получит Карлсон, который живет на крыше.
+       * Кристер и Гунилла выбежали на улицу и рассказали всем детям, что наверху у Малыша сейчас
+       * начнется большое представление "Вечер чудес".
+       * И все, у кого было хотя бы пять эре, побежали в лавку и купили там "входные конфеты".
         */
-        Place street = new Place("Street", PlaceType.STREET);
-        Place nexttoshop = new Place("nexttoshop", PlaceType.NEXTTOSHOP);
-        They they = new They(10, "Они");
-        they.setPlace(street);
-        Shop magaz = new Shop();
-        Boy krister = new Boy("Федя");
-        Girl gunilla = new Girl ("Катька");
-        magaz.addSweets(99999);
 
-        they.sayExactMessage("КОНФЕТЫ ПОЛУЧИТ КАРЛСОН");
+
+        Place street = new Place("Street", PlaceType.STREET);
+        Place nexttoshop = new Place("Shop", PlaceType.NEXTTOSHOP);
+        They.Crowd they = new They.Crowd(10, "Они");
+        they.setPlace(street);
+        Roof roof = new Roof ("Крыша", PlaceType.ROOF);
+        Human Karlson = new Human("Карлсон");
+        Karlson.setLivingPlace(roof);
+        Shop magaz = new Shop();
+        Human krister = new Human("Федя", CreatureType.BOY);
+        Human gunilla = new Human ("Катька",CreatureType.GIRL);
+        magaz.addSweets(99999);
+        Place youngBoyRoom = new Place("Комната Малыша",PlaceType.YOUNGBOYROOM);
+        Performance miracleEvening = new Performance("Вечер чудес", youngBoyRoom, new Human("Малыш",CreatureType.BOY));
+
+        they.addMessage("КОНФЕТЫ ПОЛУЧИТ КАРЛСОН");
         gunilla.setPlace(street);
         krister.setPlace(street);
-
-        Performance miracleEvening = new Performance("Вечер чудес", new Place("Комната Малыша",PlaceType.YOUNGBOYSPLACE), new Boy("Малыш"));
+        // TODO: нужно передавать объект, а не сообщение
         if(they.getPlace().equals(gunilla.getPlace())) {
             gunilla.sayExactMessage(they,miracleEvening);
         }
         else{
             System.out.println("На улице никого");
         }
+
         for(Human human : they.getHumans()) {
             if (human.getBalance() >= 5) {
                 System.out.println();

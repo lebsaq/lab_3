@@ -5,7 +5,6 @@ public class NoEnoughMoneyException extends RuntimeException {
     public Creature getTarget() {
         return target;
     }
-
     private Creature target;
 
     public NoEnoughMoneyException (String messg, Creature target) {

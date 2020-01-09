@@ -1,7 +1,6 @@
 package Trash;
 
 import Types.PlaceType;
-
 import java.util.Objects;
 
 public class Place {
@@ -34,17 +33,7 @@ public class Place {
         return this.getName();
     }
 
-//    @Override
-//    public boolean equals(Object obj) {
-//        // TODO: fix null and ==
-//        if(obj.getClass() != this.getClass()){
-//            return  false;
-//        }
-//        Place temp = (Place)obj;
-//        return (this.getName().equals(temp.getName())) && (this.getType().equals(temp.getType()));
-//    }
-
-
+    // TODO: fix null and ==
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

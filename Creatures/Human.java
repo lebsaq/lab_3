@@ -6,8 +6,8 @@ import Types.*;
 
 import java.util.*;
 
-public class Human extends Creature implements BuySweets, PresentKarlson {
 
+public class Human extends Creature implements BuySweets, PresentKarlson {
     public LinkedList<Item> inventory = new LinkedList<>();
 
     public Human(String name){
@@ -19,6 +19,16 @@ public class Human extends Creature implements BuySweets, PresentKarlson {
     }
     public Human(){
         this("unknown");
+    }
+
+
+    public Human (String name, Place livingPlace){
+        super(name,livingPlace);
+    }
+
+    public void setLivingPlace(Place livingPlace){
+        this.livingPlace=livingPlace;
+        System.out.println("Теперь " + name + " живёт на " + livingPlace);
     }
 
     public void addBalance(int amountOfMoney) {
@@ -45,7 +55,7 @@ public class Human extends Creature implements BuySweets, PresentKarlson {
     public void buySweets (Shop shop) throws NoEnoughMoneyException {
         int amountOfMoney = getBalance();
         if(!this.place.getType().equals(PlaceType.NEXTTOSHOP)){
-            throw new NoEnoughMoneyException("а денег то нет", this);
+            throw new InputMismatchException();
         }
         else {
             for (int i = 0; i < this.inventory.size(); i++) {
@@ -56,7 +66,7 @@ public class Human extends Creature implements BuySweets, PresentKarlson {
                         this.inventory.addAll(tempList);
                         System.out.println(this.toString() + " купил " + this.inventory.getLast().getAmount() + " конфет");
                     } else {
-                        throw new InputMismatchException();
+                        throw new NoEnoughMoneyException("а денег то нет", this);
                     }
                     } else {
                     if (this.getBalance()>0) {
@@ -69,7 +79,7 @@ public class Human extends Creature implements BuySweets, PresentKarlson {
         }
     }
 
-    public void presentKarlson(Human human, LinkedList<Item> list) throws  InputMismatchException{
+    public void presentKarlson(Human human, LinkedList<Item> list) throws InputMismatchException{
         if(!human.creatureType.toString().equals(CreatureType.KARLSON.toString())){
             throw new InputMismatchException();
         }

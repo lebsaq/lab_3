@@ -1,7 +1,6 @@
 package Trash;
 
 import Creatures.Creature;
-
 import java.util.Objects;
 
 public class Performance{
@@ -35,6 +34,7 @@ public class Performance{
     public void setName(String name){
         this.name = name;
     }
+
 
     @Override
     public String toString() {

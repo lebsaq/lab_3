@@ -1,53 +1,52 @@
 package Creatures;
 
 import Trash.Item;
-import Types.CreatureType;
-import Types.ItemType;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import Types.*;
+import java.util.*;
 
 public class They extends Creature {
 
-    private LinkedList<Item> inventory = new LinkedList<>();
+    private List<Item> inventory = new ArrayList<>();
 
-    public They(){
+    public They() {
         this("unknown");
     }
 
-    public They(String name){
+    public They(String name) {
         super(name, CreatureType.OTHER);
     }
 
-    public They (int n,String name) {
-        super(name, CreatureType.OTHER);
-        for (int i = 0; i < n; i++) {
-            // TODO: https://ru.wikipedia.org/wiki/Принцип_подстановки_Барбары_Лисков
-            Human human = new Human("John Doe", CreatureType.GIRL);
-            human.addBalance(i);
-            humans.add(human);
+    public static class Crowd extends Creature {
+        private Object inventory;
+
+        public Crowd(int n, String name) {
+            super(name, CreatureType.OTHER);
+            for (int i = 0; i < n; i += 2) {
+                // TODO: https://ru.wikipedia.org/wiki/Принцип_подстановки_Барбары_Лисков
+                Human human = new Human(String.format("John Doe_%s", i+1), CreatureType.OTHER);
+                human.addBalance(i);
+                humans.add(human);
+            }
         }
-    }
 
 
-    @Override
-    public String toString() {
-        return this.name;
-    }
+        @Override
+        public String toString() {
+            return this.name;
+        }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        They they = (They) o;
-        return Objects.equals(humans, they.humans) &&
-                Objects.equals(inventory, they.inventory);
-    }
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            They.Crowd they = (They.Crowd) o;
+            return Objects.equals(humans, they.humans) &&
+                    Objects.equals(inventory, they.inventory);
+        }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), humans, inventory);
+        @Override
+        public int hashCode() {
+            return Objects.hash(humans, inventory);
+        }
     }
 }

@@ -2,14 +2,12 @@ package Creatures;
 
 import Trash.Item;
 import Types.ItemType;
-
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
 public class Shop {
-    private LinkedList<Item> inventory = new LinkedList<>();
+    private List<Item> inventory = new ArrayList<>();
     private int balance;
 
     public int getBalance() {
